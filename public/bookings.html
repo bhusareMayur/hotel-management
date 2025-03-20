@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookings - Hotel Rooms Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Hotel Rooms Management</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Rooms</a></li>
+        <li><a href="/bookings.html" class="active">Bookings</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="bookings-container">
+      <h2>Current Bookings</h2>
+      <div class="booking-filters">
+        <input type="text" id="search-input" placeholder="Search by guest name...">
+        <select id="status-filter">
+          <option value="">All Statuses</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Checked-in">Checked-in</option>
+          <option value="Checked-out">Checked-out</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <table id="bookings-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Room</th>
+            <th>Guest</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-list">
+          <!-- Bookings will be loaded here dynamically -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hotel Rooms Management</p>
+  </footer>
+
+  <script src="/js/bookings.js"></script>
+</body>
+</html>

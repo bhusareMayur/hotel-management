@@ -1,0 +1,25 @@
+{
+  "name": "hotel-rooms-management",
+  "version": "1.0.0",
+  "description": "Hotel Rooms Management System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup-db": "node setup-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}

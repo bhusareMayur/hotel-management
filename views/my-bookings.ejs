@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings - Hotel Rooms Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Hotel Rooms Management</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Rooms</a></li>
+        <li><a href="/my-bookings" class="active">My Bookings</a></li>
+        <% if (user && user.role === 'admin') { %>
+          <li><a href="/admin/dashboard">Admin</a></li>
+        <% } %>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="bookings-container">
+      <h2>My Bookings</h2>
+      
+      <% if (bookings.length === 0) { %>
+        <div class="no-bookings">
+          <p>You don't have any bookings yet.</p>
+          <a href="/" class="book-btn">Browse Rooms</a>
+        </div>
+      <% } else { %>
+        <table id="bookings-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Room</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach(booking => { %>
+              <tr>
+                <td><%= booking.id %></td>
+                <td><%= booking.room_number %> (<%= booking.room_type %>)</td>
+                <td><%= new Date(booking.check_in_date).toLocaleDateString() %></td>
+                <td><%= new Date(booking.check_out_date).toLocaleDateString() %></td>
+                <td>$<%= booking.total_price %></td>
+                <td><span class="status status-<%= booking.status.toLowerCase() %>"><%= booking.status %></span></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hotel Rooms Management</p>
+  </footer>
+</body>
+</html>

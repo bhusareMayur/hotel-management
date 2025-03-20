@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Hotel Rooms Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Hotel Rooms Management</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Rooms</a></li>
+        <li><a href="/my-bookings">My Bookings</a></li>
+        <li><a href="/admin/dashboard" class="active">Admin</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Admin Dashboard</h2>
+      <p>Welcome, <%= user.username %>!</p>
+      
+      <div class="admin-dashboard">
+        <!-- Quick Stats -->
+        <div class="dashboard-card">
+          <h3>Quick Stats</h3>
+          <div class="stats-grid" id="stats-container">
+            <div class="stat-card">
+              <div class="stat-value" id="total-rooms">...</div>
+              <div class="stat-label">Total Rooms</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="available-rooms">...</div>
+              <div class="stat-label">Available Rooms</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="total-bookings">...</div>
+              <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="total-users">...</div>
+              <div class="stat-label">Registered Users</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recent Bookings -->
+        <div class="dashboard-card">
+          <h3>Recent Bookings</h3>
+          <div id="recent-bookings">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Check-in</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recent-bookings-list">
+                <!-- Dynamic recent bookings will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Function to fetch dashboard stats and recent bookings
+    async function fetchDashboardData() {
+      try {
+        // Fetch data for stats and bookings
+        const [statsResponse, bookingsResponse] = await Promise.all([
+          fetch('/admin/api/stats'),
+          fetch('/admin/api/recent-bookings')
+        ]);
+
+        const stats = await statsResponse.json();
+        const recentBookings = await bookingsResponse.json();
+
+        // Populate stats
+        document.getElementById('total-rooms').textContent = stats.totalRooms;
+        document.getElementById('available-rooms').textContent = stats.availableRooms;
+        document.getElementById('total-bookings').textContent = stats.totalBookings;
+        document.getElementById('total-users').textContent = stats.totalUsers;
+
+        // Populate recent bookings
+        const bookingsList = document.getElementById('recent-bookings-list');
+        bookingsList.innerHTML = '';
+
+        recentBookings.forEach(booking => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${booking.id}</td>
+            <td>${booking.guest_name}</td>
+            <td>${booking.room_number}</td>
+            <td>${booking.check_in_date}</td>
+            <td>${booking.status}</td>
+          `;
+          bookingsList.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      }
+    }
+
+    // Call the function when the page loads
+    window.onload = fetchDashboardData;
+  </script>
+</body>
+</html>
