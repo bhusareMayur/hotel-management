@@ -4,9 +4,9 @@
   "description": "Hotel Rooms Management System",
   "main": "server.js",
   "scripts": {
+    "setup-db": "node setup-db.js",
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "setup-db": "node setup-db.js"
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
